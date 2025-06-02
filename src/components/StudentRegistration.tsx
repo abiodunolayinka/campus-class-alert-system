@@ -27,16 +27,23 @@ const StudentRegistration = () => {
   const { toast } = useToast();
 
   const departments = [
-    "Computer Science",
-    "Mathematics",
-    "Physics",
-    "Chemistry",
-    "Biology",
-    "Engineering",
-    "Business Administration",
-    "Economics",
-    "Psychology",
-    "English Literature"
+    { value: "computer-science", label: "Computer Science" },
+    { value: "mathematics", label: "Mathematics" },
+    { value: "physics", label: "Physics" },
+    { value: "chemistry", label: "Chemistry" },
+    { value: "biology", label: "Biology" },
+    { value: "engineering", label: "Engineering" },
+    { value: "business-administration", label: "Business Administration" },
+    { value: "economics", label: "Economics" },
+    { value: "psychology", label: "Psychology" },
+    { value: "english-literature", label: "English Literature" }
+  ];
+
+  const levels = [
+    { value: "100", label: "100 Level" },
+    { value: "200", label: "200 Level" },
+    { value: "300", label: "300 Level" },
+    { value: "400", label: "400 Level" }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,10 +169,11 @@ const StudentRegistration = () => {
                   <SelectValue placeholder="Select your level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="100">100 Level</SelectItem>
-                  <SelectItem value="200">200 Level</SelectItem>
-                  <SelectItem value="300">300 Level</SelectItem>
-                  <SelectItem value="400">400 Level</SelectItem>
+                  {levels.map(level => (
+                    <SelectItem key={level.value} value={level.value}>
+                      {level.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -178,7 +186,9 @@ const StudentRegistration = () => {
                 </SelectTrigger>
                 <SelectContent>
                   {departments.map(dept => (
-                    <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                    <SelectItem key={dept.value} value={dept.value}>
+                      {dept.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
