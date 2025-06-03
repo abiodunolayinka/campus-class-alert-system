@@ -4,9 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import StudentRegistration from "@/components/StudentRegistration";
-import AdminPanel from "@/components/AdminPanel";
 import StudentDashboard from "@/components/StudentDashboard";
-import { GraduationCap, Users, Calendar, Bell, UserPlus } from "lucide-react";
+import { GraduationCap, Users, Calendar, Bell, UserPlus, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -22,12 +21,20 @@ const Index = () => {
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <h1 className="text-3xl font-bold text-gray-900">EduReminder</h1>
             </div>
-            <Link to="/register">
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                <UserPlus className="mr-2 h-4 w-4" />
-                Register as Student
-              </Button>
-            </Link>
+            <div className="flex items-center space-x-4">
+              <Link to="/register">
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Register as Student
+                </Button>
+              </Link>
+              <Link to="/admin">
+                <Button variant="outline" className="text-orange-600 border-orange-600 hover:bg-orange-50">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Admin Access
+                </Button>
+              </Link>
+            </div>
           </div>
           <p className="text-center text-gray-600 mt-2">Smart Class Notification System for Students</p>
         </div>
@@ -92,17 +99,16 @@ const Index = () => {
         {/* Main Interface */}
         <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-xl">Student Reminder System</CardTitle>
+            <CardTitle className="text-xl">Student Portal</CardTitle>
             <CardDescription>
-              Check your notifications or access the admin panel to manage class notifications
+              Check your notifications or register as a new student
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="dashboard">Student Dashboard</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="dashboard">View Notifications</TabsTrigger>
                 <TabsTrigger value="student">Quick Registration</TabsTrigger>
-                <TabsTrigger value="admin">Admin Panel</TabsTrigger>
               </TabsList>
               
               <TabsContent value="dashboard" className="mt-6">
@@ -111,10 +117,6 @@ const Index = () => {
               
               <TabsContent value="student" className="mt-6">
                 <StudentRegistration />
-              </TabsContent>
-              
-              <TabsContent value="admin" className="mt-6">
-                <AdminPanel />
               </TabsContent>
             </Tabs>
           </CardContent>
