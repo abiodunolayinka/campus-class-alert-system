@@ -59,8 +59,8 @@ const AdminPanel = () => {
 
   const getFilteredStudents = () => {
     return students.filter(student => {
-      const levelMatch = classData.targetLevel === "" || student.level === classData.targetLevel;
-      const deptMatch = classData.department === "" || classData.department === "All Departments" || student.department === classData.department;
+      const levelMatch = classData.targetLevel === "all" || classData.targetLevel === "" || student.level === classData.targetLevel;
+      const deptMatch = classData.department === "All Departments" || classData.department === "" || student.department === classData.department;
       return levelMatch && deptMatch;
     });
   };
@@ -201,7 +201,7 @@ const AdminPanel = () => {
                     <SelectValue placeholder="Select target level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Levels</SelectItem>
+                    <SelectItem value="all">All Levels</SelectItem>
                     <SelectItem value="100">100 Level</SelectItem>
                     <SelectItem value="200">200 Level</SelectItem>
                     <SelectItem value="300">300 Level</SelectItem>
