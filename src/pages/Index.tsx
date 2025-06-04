@@ -20,21 +20,30 @@ const Index = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // For now, use placeholder data since the new tables haven't been created yet
-        // Once the database is updated, we can fetch real data
+        // Get total students count
+        const { count: studentsCount } = await supabase
+          .from('students')
+          .select('*', { count: 'exact', head: true });
+
+        // Get active classes (classes scheduled for today or in the future)
+        const today = new Date().toISOString().split('T')[0];
+        const { count: classesCount } = await supabase
+          .from('classes')
+          .select('*', { count: 'exact', head: true })
+          .gte('date', today);
+
+        // Get total notifications count
+        const { count: notificationsCount } = await supabase
+          .from('notifications')
+          .select('*', { count: 'exact', head: true });
+
         setStats({
-          totalStudents: 25,
-          activeClasses: 8,
-          totalNotifications: 45
+          totalStudents: studentsCount || 0,
+          activeClasses: classesCount || 0,
+          totalNotifications: notificationsCount || 0
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
-        // Set default values on error
-        setStats({
-          totalStudents: 0,
-          activeClasses: 0,
-          totalNotifications: 0
-        });
       }
     };
 
