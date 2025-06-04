@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, Clock, MapPin, User, Mail, Phone, GraduationCap, Bell, Search } from "lucide-react";
-import EmptyState from "./EmptyState";
 
 interface Student {
   id: number;
@@ -39,7 +38,6 @@ const StudentDashboard = () => {
   const [studentData, setStudentData] = useState<Student | null>(null);
   const [notifications, setNotifications] = useState<ClassNotification[]>([]);
   const [filteredNotifications, setFilteredNotifications] = useState<ClassNotification[]>([]);
-  const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
     // Load classes from localStorage
@@ -60,27 +58,9 @@ const StudentDashboard = () => {
   }, [studentData, notifications]);
 
   const searchStudent = () => {
-    setSearchError("");
-    
-    if (!searchEmail.trim()) {
-      setSearchError("Please enter an email address");
-      return;
-    }
-
-    if (!/\S+@\S+\.\S+/.test(searchEmail)) {
-      setSearchError("Please enter a valid email address");
-      return;
-    }
-
     const students = JSON.parse(localStorage.getItem("students") || "[]");
     const found = students.find((student: Student) => student.email.toLowerCase() === searchEmail.toLowerCase());
-    
-    if (!found) {
-      setSearchError(`No student found with email "${searchEmail}"`);
-      setStudentData(null);
-    } else {
-      setStudentData(found);
-    }
+    setStudentData(found || null);
   };
 
   const formatDate = (dateString: string) => {
@@ -134,16 +114,10 @@ const StudentDashboard = () => {
                 id="search-email"
                 type="email"
                 value={searchEmail}
-                onChange={(e) => {
-                  setSearchEmail(e.target.value);
-                  setSearchError("");
-                }}
+                onChange={(e) => setSearchEmail(e.target.value)}
                 placeholder="Enter your registered email"
-                className={`mt-1 ${searchError ? "border-red-500" : ""}`}
+                className="mt-1"
               />
-              {searchError && (
-                <p className="text-sm text-red-500 mt-1">{searchError}</p>
-              )}
             </div>
             <Button onClick={searchStudent} className="mt-6">
               <Search className="mr-2 h-4 w-4" />
@@ -264,23 +238,29 @@ const StudentDashboard = () => {
                   ))}
                 </div>
               ) : (
-                <EmptyState
-                  icon={Bell}
-                  title="No Notifications Yet"
-                  description="You haven't received any class notifications for your level and department. Check back later for updates from your lecturers and administration!"
-                />
+                <div className="text-center py-8">
+                  <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-500 mb-2">No Notifications Yet</h3>
+                  <p className="text-gray-400">
+                    You haven't received any class notifications. Check back later for updates!
+                  </p>
+                </div>
               )}
             </CardContent>
           </Card>
         </>
       )}
 
-      {!studentData && searchEmail && !searchError && (
-        <EmptyState
-          icon={User}
-          title="Student Not Found"
-          description={`No student found with the email address "${searchEmail}". Please check the email or register first.`}
-        />
+      {searchEmail && !studentData && (
+        <Card>
+          <CardContent className="text-center py-8">
+            <User className="h-12 w-12 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-500 mb-2">Student Not Found</h3>
+            <p className="text-gray-400">
+              No student found with the email address "{searchEmail}". Please check the email or register first.
+            </p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
