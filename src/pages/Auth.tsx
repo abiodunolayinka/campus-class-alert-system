@@ -66,6 +66,7 @@ const Auth = () => {
         toast({
           title: "Account created successfully!",
           description: "Please check your email to verify your account.",
+          variant: "success"
         });
       }
     } catch (error: any) {
@@ -95,6 +96,7 @@ const Auth = () => {
         toast({
           title: "Welcome back!",
           description: "You have been logged in successfully.",
+          variant: "success"
         });
         navigate("/admin");
       }
