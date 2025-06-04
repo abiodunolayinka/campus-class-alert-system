@@ -1,33 +1,55 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminPanel from "@/components/AdminPanel";
 import ClassManagement from "@/components/ClassManagement";
-import AdminLogin from "@/components/AdminLogin";
 import { GraduationCap, LogOut, Settings, Calendar } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminDashboard = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem("adminAuthenticated") === "true";
-  });
+  const { user, loading, signOut } = useAuth();
+  const [userRole, setUserRole] = useState<string>("");
+  const navigate = useNavigate();
 
-  const adminRole = localStorage.getItem("adminRole") || "Admin";
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
 
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (user) {
+        const { data } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) {
+          setUserRole(data.role === 'lecturer' ? 'Lecturer' : 'Student Representative');
+        }
+      }
+    };
+
+    fetchUserRole();
+  }, [user]);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuthenticated");
-    localStorage.removeItem("adminRole");
-    setIsAuthenticated(false);
-  };
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
 
-  if (!isAuthenticated) {
-    return <AdminLogin onLoginSuccess={handleLoginSuccess} />;
+  if (!user) {
+    return null;
   }
 
   return (
@@ -40,7 +62,7 @@ const AdminDashboard = () => {
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">EduReminder Admin</h1>
-                <p className="text-sm text-gray-600">Logged in as: {adminRole}</p>
+                <p className="text-sm text-gray-600">Logged in as: {userRole}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">

@@ -23,6 +23,7 @@ const StudentRegistration = () => {
     smsNotifications: false
   });
   
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -46,8 +47,62 @@ const StudentRegistration = () => {
     { value: "400", label: "400 Level" }
   ];
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required";
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    } else {
+      // Check if email already exists
+      const existingStudents = JSON.parse(localStorage.getItem("students") || "[]");
+      const emailExists = existingStudents.some((student: any) => 
+        student.email.toLowerCase() === formData.email.toLowerCase()
+      );
+      if (emailExists) {
+        newErrors.email = "This email is already registered";
+      }
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\+?[\d\s-()]+$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+
+    if (!formData.level) {
+      newErrors.level = "Academic level is required";
+    }
+
+    if (!formData.department) {
+      newErrors.department = "Department is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      toast({
+        title: "Registration Failed",
+        description: "Please fill in all required fields correctly.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     // Simulate API call
@@ -67,6 +122,7 @@ const StudentRegistration = () => {
       toast({
         title: "Registration Successful!",
         description: `Welcome ${formData.firstName}! You'll receive notifications for ${formData.level} level classes.`,
+        variant: "success"
       });
 
       // Reset form
@@ -81,6 +137,7 @@ const StudentRegistration = () => {
         emailNotifications: true,
         smsNotifications: false
       });
+      setErrors({});
       
       setIsLoading(false);
     }, 1500);
@@ -88,6 +145,10 @@ const StudentRegistration = () => {
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
   };
 
   return (
@@ -105,31 +166,37 @@ const StudentRegistration = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">First Name *</Label>
               <Input
                 id="firstName"
                 value={formData.firstName}
                 onChange={(e) => handleInputChange("firstName", e.target.value)}
                 placeholder="Enter your first name"
-                required
+                className={errors.firstName ? "border-red-500" : ""}
               />
+              {errors.firstName && (
+                <p className="text-sm text-red-500">{errors.firstName}</p>
+              )}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">Last Name *</Label>
               <Input
                 id="lastName"
                 value={formData.lastName}
                 onChange={(e) => handleInputChange("lastName", e.target.value)}
                 placeholder="Enter your last name"
-                required
+                className={errors.lastName ? "border-red-500" : ""}
               />
+              {errors.lastName && (
+                <p className="text-sm text-red-500">{errors.lastName}</p>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Email Address *</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -138,14 +205,16 @@ const StudentRegistration = () => {
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   placeholder="student@university.edu"
-                  className="pl-10"
-                  required
+                  className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
                 />
               </div>
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email}</p>
+              )}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">Phone Number *</Label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -154,18 +223,20 @@ const StudentRegistration = () => {
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
                   placeholder="+234 801 234 5678"
-                  className="pl-10"
-                  required
+                  className={`pl-10 ${errors.phone ? "border-red-500" : ""}`}
                 />
               </div>
+              {errors.phone && (
+                <p className="text-sm text-red-500">{errors.phone}</p>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Academic Level</Label>
+              <Label>Academic Level *</Label>
               <Select value={formData.level} onValueChange={(value) => handleInputChange("level", value)}>
-                <SelectTrigger>
+                <SelectTrigger className={errors.level ? "border-red-500" : ""}>
                   <SelectValue placeholder="Select your level" />
                 </SelectTrigger>
                 <SelectContent>
@@ -176,12 +247,15 @@ const StudentRegistration = () => {
                   ))}
                 </SelectContent>
               </Select>
+              {errors.level && (
+                <p className="text-sm text-red-500">{errors.level}</p>
+              )}
             </div>
             
             <div className="space-y-2">
-              <Label>Department</Label>
+              <Label>Department *</Label>
               <Select value={formData.department} onValueChange={(value) => handleInputChange("department", value)}>
-                <SelectTrigger>
+                <SelectTrigger className={errors.department ? "border-red-500" : ""}>
                   <SelectValue placeholder="Select your department" />
                 </SelectTrigger>
                 <SelectContent>
@@ -192,6 +266,9 @@ const StudentRegistration = () => {
                   ))}
                 </SelectContent>
               </Select>
+              {errors.department && (
+                <p className="text-sm text-red-500">{errors.department}</p>
+              )}
             </div>
           </div>
 
