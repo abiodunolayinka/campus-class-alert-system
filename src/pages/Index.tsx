@@ -1,45 +1,16 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import StudentRegistration from "@/components/StudentRegistration";
+import AdminPanel from "@/components/AdminPanel";
 import StudentDashboard from "@/components/StudentDashboard";
-import { GraduationCap, Users, Calendar, Bell, UserPlus, Settings } from "lucide-react";
+import { GraduationCap, Users, Calendar, Bell, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [stats, setStats] = useState({
-    totalStudents: 0,
-    activeClasses: 0,
-    totalNotifications: 0
-  });
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        // For now, use placeholder data since the new tables haven't been created yet
-        // Once the database is updated, we can fetch real data
-        setStats({
-          totalStudents: 25,
-          activeClasses: 8,
-          totalNotifications: 45
-        });
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-        // Set default values on error
-        setStats({
-          totalStudents: 0,
-          activeClasses: 0,
-          totalNotifications: 0
-        });
-      }
-    };
-
-    fetchStats();
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -51,20 +22,12 @@ const Index = () => {
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <h1 className="text-3xl font-bold text-gray-900">EduReminder</h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link to="/register">
-                <Button className="bg-blue-600 hover:bg-blue-700">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Register as Student
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button variant="outline" className="text-orange-600 border-orange-600 hover:bg-orange-50">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Admin Access
-                </Button>
-              </Link>
-            </div>
+            <Link to="/register">
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                <UserPlus className="mr-2 h-4 w-4" />
+                Register as Student
+              </Button>
+            </Link>
           </div>
           <p className="text-center text-gray-600 mt-2">Smart Class Notification System for Students</p>
         </div>
@@ -80,7 +43,7 @@ const Index = () => {
               <Users className="h-4 w-4 text-blue-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{stats.totalStudents}</div>
+              <div className="text-2xl font-bold text-blue-600">1,234</div>
               <p className="text-xs text-muted-foreground">Registered across all levels</p>
             </CardContent>
           </Card>
@@ -91,19 +54,19 @@ const Index = () => {
               <Calendar className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{stats.activeClasses}</div>
-              <p className="text-xs text-muted-foreground">Scheduled upcoming</p>
+              <div className="text-2xl font-bold text-green-600">28</div>
+              <p className="text-xs text-muted-foreground">Scheduled this week</p>
             </CardContent>
           </Card>
           
           <Card className="bg-white/80 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Notifications</CardTitle>
+              <CardTitle className="text-sm font-medium">Notifications</CardTitle>
               <Bell className="h-4 w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-orange-600">{stats.totalNotifications}</div>
-              <p className="text-xs text-muted-foreground">Sent to students</p>
+              <div className="text-2xl font-bold text-orange-600">156</div>
+              <p className="text-xs text-muted-foreground">Sent today</p>
             </CardContent>
           </Card>
         </div>
@@ -129,16 +92,17 @@ const Index = () => {
         {/* Main Interface */}
         <Card className="bg-white/90 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-xl">Student Portal</CardTitle>
+            <CardTitle className="text-xl">Student Reminder System</CardTitle>
             <CardDescription>
-              Check your notifications or register as a new student
+              Check your notifications or access the admin panel to manage class notifications
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="dashboard">View Notifications</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="dashboard">Student Dashboard</TabsTrigger>
                 <TabsTrigger value="student">Quick Registration</TabsTrigger>
+                <TabsTrigger value="admin">Admin Panel</TabsTrigger>
               </TabsList>
               
               <TabsContent value="dashboard" className="mt-6">
@@ -147,6 +111,10 @@ const Index = () => {
               
               <TabsContent value="student" className="mt-6">
                 <StudentRegistration />
+              </TabsContent>
+              
+              <TabsContent value="admin" className="mt-6">
+                <AdminPanel />
               </TabsContent>
             </Tabs>
           </CardContent>
