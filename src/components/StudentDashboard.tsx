@@ -94,20 +94,20 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Search Section */}
       <Card>
-        <CardHeader>
+        <CardHeader className="p-4">
           <CardTitle className="flex items-center space-x-2">
             <Search className="h-5 w-5 text-blue-600" />
-            <span>Student Dashboard</span>
+            <span className="text-lg">Student Dashboard</span>
           </CardTitle>
           <CardDescription>
             Enter your email address to view your profile and class notifications
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex space-x-4">
+        <CardContent className="p-4">
+          <div className="sm:flex  space-x-4">
             <div className="flex-1">
               <Label htmlFor="search-email">Email Address</Label>
               <Input
@@ -119,7 +119,7 @@ const StudentDashboard = () => {
                 className="mt-1"
               />
             </div>
-            <Button onClick={searchStudent} className="mt-6">
+            <Button onClick={searchStudent} className="mt-6 ">
               <Search className="mr-2 h-4 w-4" />
               Search
             </Button>

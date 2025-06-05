@@ -17,13 +17,13 @@ const Index = () => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="sm:flex items-center justify-center sm:justify-between">
             <div className="flex items-center space-x-3">
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <h1 className="text-3xl font-bold text-gray-900">EduReminder</h1>
             </div>
             <Link to="/register">
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button className="bg-blue-600 hover:bg-blue-700 self-center">
                 <UserPlus className="mr-2 h-4 w-4" />
                 Register as Student
               </Button>
@@ -97,12 +97,12 @@ const Index = () => {
               Check your notifications or access the admin panel to manage class notifications
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-2">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="dashboard">Student Dashboard</TabsTrigger>
-                <TabsTrigger value="student">Quick Registration</TabsTrigger>
-                <TabsTrigger value="admin">Admin Panel</TabsTrigger>
+                <TabsTrigger className="text-[10px]" value="dashboard">Student Dashboard</TabsTrigger>
+                <TabsTrigger className="text-[10px]"  value="student">Quick Registration</TabsTrigger>
+                <TabsTrigger className="text-[10px]"  value="admin">Admin Panel</TabsTrigger>
               </TabsList>
               
               <TabsContent value="dashboard" className="mt-6">

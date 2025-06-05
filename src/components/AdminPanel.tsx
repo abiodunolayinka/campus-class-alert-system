@@ -115,16 +115,16 @@ const AdminPanel = () => {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader>
+        <CardHeader className="p-2">
           <CardTitle className="flex items-center space-x-2">
             <Settings className="h-5 w-5 text-blue-600" />
-            <span>Admin Panel - Schedule Class Notification</span>
+            <span className="text-lg">Admin Panel - Schedule Class Notification</span>
           </CardTitle>
           <CardDescription>
             Create and send notifications to students about upcoming classes
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-2" >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -226,7 +226,7 @@ const AdminPanel = () => {
             </div>
 
             <div className="bg-blue-50 p-4 rounded-lg">
-              <div className="flex items-center space-x-2 mb-2">
+              <div className="flex items-center space-x-1 mb-2">
                 <Users className="h-4 w-4 text-blue-600" />
                 <span className="font-medium text-blue-900">Students to be notified:</span>
                 <Badge variant="secondary" className="bg-blue-100 text-blue-800">
@@ -262,7 +262,7 @@ const AdminPanel = () => {
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-2">
             <div className="text-2xl font-bold text-blue-600">{students.length}</div>
             <p className="text-sm text-gray-600">Total Students</p>
           </CardContent>

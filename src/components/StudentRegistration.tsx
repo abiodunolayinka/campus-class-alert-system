@@ -101,7 +101,7 @@ const StudentRegistration = () => {
           Register to receive notifications about your classes and important announcements
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -202,17 +202,17 @@ const StudentRegistration = () => {
               onValueChange={(value) => handleInputChange("notificationPreference", value)}
               className="flex space-x-6"
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="email" id="email-pref" />
-                <Label htmlFor="email-pref">Email Only</Label>
+                <Label className="text-[10px]" htmlFor="email-pref">Email Only</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="sms" id="sms-pref" />
-                <Label htmlFor="sms-pref">SMS Only</Label>
+                <Label className="text-[10px]" htmlFor="sms-pref">SMS Only</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="both" id="both-pref" />
-                <Label htmlFor="both-pref">Both Email & SMS</Label>
+                <Label className="text-[10px]" htmlFor="both-pref">Both Email & SMS</Label>
               </div>
             </RadioGroup>
           </div>
