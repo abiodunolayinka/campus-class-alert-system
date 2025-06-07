@@ -57,15 +57,15 @@ const AdminDashboard = () => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="sm:flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">EduReminder Admin</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">EduReminder Admin</h1>
                 <p className="text-sm text-gray-600">Logged in as: {userRole}</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-center space-x-4 mt-[8px] sm:mt-0">
               <Link to="/">
                 <Button variant="outline">
                   Back to Main Site
