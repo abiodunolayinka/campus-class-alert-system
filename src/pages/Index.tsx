@@ -51,24 +51,24 @@ const Index = () => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-3 sm:py-6">
-          <div className="flex flex-col xs:flex-row items-center justify-between space-y-2 xs:space-y-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
             <div className="flex items-center space-x-2 sm:space-x-3">
               <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600" />
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">EduReminder</h1>
             </div>
-            <div className="flex flex-col xs:flex-row items-center space-y-2 xs:space-y-0 xs:space-x-2 sm:space-x-4">
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 xs:space-x-2 sm:space-x-4">
               <Link to="/register">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4">
                   <UserPlus className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   Register as Student
                 </Button>
               </Link>
-              <Link to="/admin-signup">
+              {/* <Link to="/admin-signup">
                 <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-50 text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4">
                   <Shield className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   Admin Signup
                 </Button>
-              </Link>
+              </Link> */}
               <Link to="/auth">
                 <Button variant="outline" className="text-orange-600 border-orange-600 hover:bg-orange-50 text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4">
                   <Settings className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
@@ -84,7 +84,7 @@ const Index = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
           <Card className="bg-white/80 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 sm:pb-2 px-3 sm:px-6 pt-3 sm:pt-6">
               <CardTitle className="text-xs sm:text-sm font-medium">Total Students</CardTitle>

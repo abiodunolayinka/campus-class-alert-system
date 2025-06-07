@@ -298,15 +298,15 @@ const StudentRegistration = () => {
               onValueChange={(value) => handleInputChange("notificationPreference", value)}
               className="flex flex-col xs:flex-row xs:space-x-4 space-y-2 xs:space-y-0"
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="email" id="email-pref" className="h-3 w-3 sm:h-4 sm:w-4" />
                 <Label htmlFor="email-pref" className="text-xs sm:text-sm">Email Only</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="sms" id="sms-pref" className="h-3 w-3 sm:h-4 sm:w-4" />
                 <Label htmlFor="sms-pref" className="text-xs sm:text-sm">SMS Only</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <RadioGroupItem value="both" id="both-pref" className="h-3 w-3 sm:h-4 sm:w-4" />
                 <Label htmlFor="both-pref" className="text-xs sm:text-sm">Both Email & SMS</Label>
               </div>
@@ -316,7 +316,7 @@ const StudentRegistration = () => {
           <div className="space-y-3 sm:space-y-4">
             <Label className="text-xs sm:text-sm">Additional Settings</Label>
             <div className="space-y-2 sm:space-y-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center sm:space-x-2">
                 <Checkbox
                   id="email-notifications"
                   checked={formData.emailNotifications}

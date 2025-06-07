@@ -9,7 +9,7 @@ const StudentRegister = () => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="sm:flex items-center sm:justify-between justisfy-center">
             <Link 
               to="/" 
               className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
@@ -17,8 +17,8 @@ const StudentRegister = () => {
               <ArrowLeft className="h-5 w-5" />
               <span>Back to Dashboard</span>
             </Link>
-            <div className="flex items-center space-x-3">
-              <h1 className="text-3xl font-bold text-gray-900">Student Registration</h1>
+            <div className="flex items-center justify-center sm:space-x-3">
+              <h1 className="text-2xl sm:text-3xl text-center font-bold text-gray-900">Student Registration</h1>
             </div>
           </div>
           <p className="text-center text-gray-600 mt-2">Register to receive class notifications</p>

@@ -127,7 +127,7 @@ const StudentDashboard = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-4">
+          <div className="sm:flex space-x-1 sm:space-x-4">
             <div className="flex-1">
               <Label htmlFor="search-email">Email Address</Label>
               <Input
