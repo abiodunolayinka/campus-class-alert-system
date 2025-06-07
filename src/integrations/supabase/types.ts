@@ -9,81 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      admins: {
-        Row: {
-          created_at: string
-          created_by: string | null
-          department: string | null
-          email: string
-          first_name: string | null
-          id: string
-          last_login: string | null
-          last_name: string | null
-          role: Database["public"]["Enums"]["user_role"]
-          updated_at: string
-          user_id: string | null
-          username: string
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string | null
-          department?: string | null
-          email: string
-          first_name?: string | null
-          id?: string
-          last_login?: string | null
-          last_name?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string
-          user_id?: string | null
-          username: string
-        }
-        Update: {
-          created_at?: string
-          created_by?: string | null
-          department?: string | null
-          email?: string
-          first_name?: string | null
-          id?: string
-          last_login?: string | null
-          last_name?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          updated_at?: string
-          user_id?: string | null
-          username?: string
-        }
-        Relationships: []
-      }
-      email_notifications: {
-        Row: {
-          content: string | null
-          email_type: string
-          id: string
-          recipient_email: string
-          sent_at: string
-          status: string
-          subject: string
-        }
-        Insert: {
-          content?: string | null
-          email_type: string
-          id?: string
-          recipient_email: string
-          sent_at?: string
-          status?: string
-          subject: string
-        }
-        Update: {
-          content?: string | null
-          email_type?: string
-          id?: string
-          recipient_email?: string
-          sent_at?: string
-          status?: string
-          subject?: string
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           created_at: string
@@ -108,57 +33,6 @@ export type Database = {
           id?: string
           last_name?: string | null
           updated_at?: string
-        }
-        Relationships: []
-      }
-      students: {
-        Row: {
-          created_at: string
-          department: string
-          email: string
-          email_notifications: boolean
-          first_name: string
-          id: string
-          last_name: string
-          level: string
-          notification_preference: string
-          phone: string
-          registration_date: string
-          sms_notifications: boolean
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          department: string
-          email: string
-          email_notifications?: boolean
-          first_name: string
-          id?: string
-          last_name: string
-          level: string
-          notification_preference?: string
-          phone: string
-          registration_date?: string
-          sms_notifications?: boolean
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          department?: string
-          email?: string
-          email_notifications?: boolean
-          first_name?: string
-          id?: string
-          last_name?: string
-          level?: string
-          notification_preference?: string
-          phone?: string
-          registration_date?: string
-          sms_notifications?: boolean
-          updated_at?: string
-          user_id?: string | null
         }
         Relationships: []
       }
@@ -200,7 +74,7 @@ export type Database = {
       }
     }
     Enums: {
-      user_role: "lecturer" | "student_representative" | "admin" | "super_admin"
+      user_role: "lecturer" | "student_representative"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -316,7 +190,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      user_role: ["lecturer", "student_representative", "admin", "super_admin"],
+      user_role: ["lecturer", "student_representative"],
     },
   },
 } as const
