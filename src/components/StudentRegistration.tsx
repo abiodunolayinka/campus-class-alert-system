@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { UserPlus, Mail, Phone, GraduationCap } from "lucide-react";
 
 const StudentRegistration = () => {
@@ -50,19 +51,27 @@ const StudentRegistration = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Student registration data:", formData);
-      
-      // Save to localStorage (simulating database)
-      const existingStudents = JSON.parse(localStorage.getItem("students") || "[]");
-      const newStudent = {
-        ...formData,
-        id: Date.now(),
-        registrationDate: new Date().toISOString()
-      };
-      existingStudents.push(newStudent);
-      localStorage.setItem("students", JSON.stringify(existingStudents));
+    try {
+      const { data, error } = await supabase
+        .from('students')
+        .insert([
+          {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            level: formData.level,
+            department: formData.department,
+            notification_preference: formData.notificationPreference,
+            email_notifications: formData.emailNotifications,
+            sms_notifications: formData.smsNotifications
+          }
+        ])
+        .select();
+
+      if (error) {
+        throw error;
+      }
 
       toast({
         title: "Registration Successful!",
@@ -82,8 +91,15 @@ const StudentRegistration = () => {
         smsNotifications: false
       });
       
+    } catch (error: any) {
+      toast({
+        title: "Registration Failed",
+        description: error.message || "There was an error registering the student.",
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
